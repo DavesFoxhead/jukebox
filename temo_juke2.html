@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAVE'S FOXHEAD JUKE</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-image: url('jukedoodle.jpg');
+            background-size: cover;
+            color: #2b07ad;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: rgba(96, 128, 56, 0.7); /* Moss color with alpha */
+            color: #d4af37;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 24px;
+            border-bottom: 2px solid #d4af37;
+            position: relative;
+            z-index: 1;
+        }
+
+        main {
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        #songs-section {
+            background-color: rgba(96, 128, 56, 0.9); /* Moss color with alpha */
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        #search-bar {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #340ebf;
+            background-color: rgba(235, 229, 140, 0.7); /* Moss color with alpha */
+            color: #aa37d4;
+            font-size: 18px;
+            caret-color: #1238c3;
+            border-radius: 8px;
+        }
+
+        .song-list-header {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .song-entry {
+            border-bottom: 1px solid #0a0408;
+            padding: 10px 0;
+        }
+
+        .song-entry:last-child {
+            border-bottom: none;
+        }
+
+        .song-entry .song-info {
+            display: inline-block;
+            width: 60%;
+            font-size: 18px;
+        }
+
+        .song-entry .song-code {
+            display: inline-block;
+            width: 20%;
+            font-size: 18px;
+        }
+
+        .song-entry .song-number {
+            display: inline-block;
+            width: 20%;
+            text-align: right;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>DAVE'S FOXHEAD JUKE</h1>
+    </header>
+    <main>
+        <section id="songs-section">
+            <h2 class="song-list-header">play carl portishead</h2>
+            <input type="text" id="search-bar" placeholder="🔍 Search songs...">
+            <div id="song-list">
+                <!-- Song entries will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const songs = [
+            { code: "ABC123", name: "No Surprises", artist: "Radiohead", album: "OK Computer" },
+            { code: "DEF456", name: "Fake Plastic Trees", artist: "Radiohead", album: "The Bends" },
+            // Add more songs here
+            { code: "GHI789", name: "Karma Police", artist: "Radiohead", album: "OK Computer" },
+            { code: "JKL012", name: "Paranoid Android", artist: "Radiohead", album: "OK Computer" },
+            // Add more songs from the same album here
+            { code: "MNO345", name: "Exit Music (For a Film)", artist: "Radiohead", album: "OK Computer" },
+            { code: "PQR678", name: "Let Down", artist: "Radiohead", album: "OK Computer" },
+            { code: "STU901", name: "Electioneering", artist: "Radiohead", album: "OK Computer" },
+            { code: "VWX234", name: "Subterranean Homesick Alien", artist: "Radiohead", album: "OK Computer" },
+            { code: "YZA567", name: "Airbag", artist: "Radiohead", album: "OK Computer" }
+        ];
+
+        function displaySongs() {
+            const searchTerm = document.getElementById("search-bar").value.toLowerCase();
+            const songList = document.getElementById("song-list");
+            songList.innerHTML = ""; // Clear previous entries
+
+            const filteredSongs = songs.filter(song =>
+                song.name.toLowerCase().includes(searchTerm) || song.artist.toLowerCase().includes(searchTerm)
+            );
+
+            // Sort by artist
+            filteredSongs.sort((a, b) => a.artist.localeCompare(b.artist));
+
+            filteredSongs.forEach((song, index) => {
+                const songEntry = document.createElement("div");
+                songEntry.classList.add("song-entry");
+
+                const songCode = document.createElement("div");
+                songCode.classList.add("song-code");
+                songCode.textContent = song.code;
+                songEntry.appendChild(songCode);
+
+                const songInfo = document.createElement("div");
+                songInfo.classList.add("song-info");
+                songInfo.textContent = `${song.name} (${song.artist} - ${song.album})`;
+                songEntry.appendChild(songInfo);
+
+                songList.appendChild(songEntry);
+            });
+        }
+
+        // Display songs initially
+        displaySongs();
+
+        // Event listener for search bar
+        document.getElementById("search-bar").addEventListener("input", displaySongs);
+    </script>
+</body>
+</html>
